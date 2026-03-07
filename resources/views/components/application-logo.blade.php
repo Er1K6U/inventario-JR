@@ -1,0 +1,1 @@
+<img src="{{ asset('images/brand/logo-jr-movilidad-electrica.png') }}" alt="JR Movilidad Eléctrica" class="h-12 w-auto">
