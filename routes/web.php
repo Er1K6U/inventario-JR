@@ -10,9 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminApprovalController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
