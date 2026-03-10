@@ -24,8 +24,8 @@
                         {{ __('Ventas escáner') }}
                     </x-nav-link>
 
-                    @role('Administrador')
-                    <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.*')">
+                    @role('Administrador|admin|vendedor')
+                    <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reportes.*') || request()->routeIs('reports.*')">
                         {{ __('Reportes') }}
                     </x-nav-link>
 
