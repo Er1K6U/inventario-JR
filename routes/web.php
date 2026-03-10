@@ -8,6 +8,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SalesScannerController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StockEntryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerProjectController;
+use App\Http\Controllers\CustomerProjectItemController;
+use App\Http\Controllers\CustomerProjectPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
@@ -44,12 +49,33 @@ Route::middleware('auth')->group(function () {
     Route::post('sales/scanner/clear', [SalesScannerController::class, 'clear'])->name('sales.scanner.clear');
     Route::post('sales/scanner/checkout', [SalesScannerController::class, 'checkout'])->name('sales.scanner.checkout');
 
-    Route::middleware('role:admin|Administrador|vendedor')->group(function () {
+    Route::middleware('role:admin|Administrador|Vendedor')->group(function () {
         Route::get('/reportes', [ReportController::class, 'index'])->name('reportes.index');
         Route::get('/reportes/ventas', [ReportController::class, 'index'])->name('reportes.ventas');
         Route::get('/reportes/ventas/exportar', [ReportController::class, 'export'])->name('reportes.ventas.exportar');
         Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
         Route::get('/reports/export', [ReportController::class, 'export'])->name('reports.export');
+    });
+
+    Route::prefix('clientes-credito')->name('clientes_credito.')->group(function () {
+        Route::get('/clientes', [CustomerController::class, 'index'])->name('clientes.index');
+        Route::post('/clientes', [CustomerController::class, 'store'])->name('clientes.store');
+
+        Route::get('/clientes/{customer}/proyectos', [CustomerProjectController::class, 'index'])->name('proyectos.index');
+        Route::post('/proyectos', [CustomerProjectController::class, 'store'])->name('proyectos.store');
+        Route::get('/proyectos/{project}', [CustomerProjectController::class, 'show'])->name('proyectos.show');
+        Route::post('/proyectos/{project}/cerrar', [CustomerProjectController::class, 'close'])->name('proyectos.close');
+
+        Route::post('/proyectos/{project}/items', [CustomerProjectItemController::class, 'store'])->name('items.store');
+        Route::post('/proyectos/{project}/pagos', [CustomerProjectPaymentController::class, 'store'])->name('pagos.store');
+    });
+
+    Route::middleware('role:Administrador|admin|Vendedor')->group(function () {
+        Route::get('/ingresos-mercancia', [StockEntryController::class, 'index'])->name('stock-entries.index');
+        Route::post('/ingresos-mercancia', [StockEntryController::class, 'store'])->name('stock-entries.store');
+
+        Route::get('/ingresos-mercancia/reporte', [StockEntryController::class, 'report'])->name('stock-entries.report');
+        Route::get('/ingresos-mercancia/reporte/export', [StockEntryController::class, 'export'])->name('stock-entries.export');
     });
 
     Route::middleware('role:Administrador')->group(function () {

@@ -24,11 +24,19 @@
                         {{ __('Ventas escáner') }}
                     </x-nav-link>
 
-                    @role('Administrador|admin|vendedor')
+                    @role('Administrador|admin|Vendedor')
                     <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reportes.*') || request()->routeIs('reports.*')">
                         {{ __('Reportes') }}
                     </x-nav-link>
+                    @endrole
+                    
+                    @role('Administrador|admin|Vendedor')
+                    <x-nav-link :href="route('stock-entries.index')" :active="request()->routeIs('stock-entries.*')">
+                        {{ __('Ingreso mercancía') }}
+                    </x-nav-link>
+                    @endrole
 
+                    @role('Administrador')
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                         {{ __('Usuarios') }}
                     </x-nav-link>
