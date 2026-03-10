@@ -16,7 +16,7 @@ class StoreCustomerProjectItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => ['required', 'exists:products,id'],
+            'product_query' => ['required', 'string', 'max:100'],
             'quantity' => ['required', 'integer', 'min:1'],
             'unit_price' => ['nullable', 'numeric', 'min:0'],
         ];
@@ -24,10 +24,18 @@ class StoreCustomerProjectItemRequest extends FormRequest
 
     protected function passedValidation(): void
     {
-        $product = Product::find($this->integer('product_id'));
+        $query = trim((string) $this->input('product_query'));
+
+        $product = Product::query()
+            ->where('code', $query)
+            ->orWhere('barcode', $query)
+            ->orWhere('id', is_numeric($query) ? (int) $query : 0)
+            ->first();
 
         if (!$product) {
-            return;
+            throw ValidationException::withMessages([
+                'product_query' => 'Producto no encontrado por código, barcode o ID.',
+            ]);
         }
 
         if ($product->stock < $this->integer('quantity')) {

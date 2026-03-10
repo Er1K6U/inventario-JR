@@ -29,7 +29,8 @@
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                                 <option value="">-- Todos --</option>
                                 @foreach($products as $product)
-                                    <option value="{{ $product->id }}" @selected((string) $filters['product_id'] === (string) $product->id)>
+                                    <option value="{{ $product->id }}"
+                                        @selected((string) $filters['product_id'] === (string) $product->id)>
                                         {{ $product->code }} - {{ $product->name }}
                                     </option>
                                 @endforeach
@@ -42,7 +43,8 @@
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                                 <option value="">-- Todos --</option>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}" @selected((string) $filters['user_id'] === (string) $user->id)>
+                                    <option value="{{ $user->id }}"
+                                        @selected((string) $filters['user_id'] === (string) $user->id)>
                                         {{ $user->name }} ({{ $user->email }})
                                     </option>
                                 @endforeach

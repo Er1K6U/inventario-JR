@@ -13,6 +13,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerProjectController;
 use App\Http\Controllers\CustomerProjectItemController;
 use App\Http\Controllers\CustomerProjectPaymentController;
+use App\Http\Controllers\CustomerProjectReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
@@ -68,6 +69,12 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/proyectos/{project}/items', [CustomerProjectItemController::class, 'store'])->name('items.store');
         Route::post('/proyectos/{project}/pagos', [CustomerProjectPaymentController::class, 'store'])->name('pagos.store');
+
+        // Informes de ventas por proyectos
+        Route::get('/reportes/proyectos-ventas', [CustomerProjectReportController::class, 'index'])
+            ->name('reportes.proyectos_ventas');
+        Route::get('/reportes/proyectos-ventas/export', [CustomerProjectReportController::class, 'export'])
+            ->name('reportes.proyectos_ventas.export');
     });
 
     Route::middleware('role:Administrador|admin|Vendedor')->group(function () {

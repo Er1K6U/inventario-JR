@@ -29,10 +29,24 @@
                         {{ __('Reportes') }}
                     </x-nav-link>
                     @endrole
-                    
+
                     @role('Administrador|admin|Vendedor')
                     <x-nav-link :href="route('stock-entries.index')" :active="request()->routeIs('stock-entries.*')">
                         {{ __('Ingreso mercancía') }}
+                    </x-nav-link>
+                    @endrole
+
+                    @role('Administrador|admin|Vendedor')
+                    <x-nav-link :href="route('clientes_credito.clientes.index')"
+                        :active="request()->routeIs('clientes_credito.clientes.*') || request()->routeIs('clientes_credito.proyectos.*') || request()->routeIs('clientes_credito.items.*') || request()->routeIs('clientes_credito.pagos.*')">
+                        {{ __('Clientes Crédito') }}
+                    </x-nav-link>
+                    @endrole
+
+                    @role('Administrador|admin|Vendedor')
+                    <x-nav-link :href="route('clientes_credito.reportes.proyectos_ventas')"
+                        :active="request()->routeIs('clientes_credito.reportes.proyectos_ventas*')">
+                        {{ __('Informe Proyectos') }}
                     </x-nav-link>
                     @endrole
 
@@ -103,6 +117,44 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('cash-sessions.index')" :active="request()->routeIs('cash-sessions.*')">
+                {{ __('Caja del día') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
+                {{ __('Productos') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('sales.scanner')" :active="request()->routeIs('sales.scanner*')">
+                {{ __('Ventas escáner') }}
+            </x-responsive-nav-link>
+
+            @role('Administrador|admin|Vendedor')
+            <x-responsive-nav-link :href="route('reports.index')" :active="request()->routeIs('reportes.*') || request()->routeIs('reports.*')">
+                {{ __('Reportes') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('stock-entries.index')" :active="request()->routeIs('stock-entries.*')">
+                {{ __('Ingreso mercancía') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('clientes_credito.clientes.index')"
+                :active="request()->routeIs('clientes_credito.clientes.*') || request()->routeIs('clientes_credito.proyectos.*') || request()->routeIs('clientes_credito.items.*') || request()->routeIs('clientes_credito.pagos.*')">
+                {{ __('Clientes Crédito') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('clientes_credito.reportes.proyectos_ventas')"
+                :active="request()->routeIs('clientes_credito.reportes.proyectos_ventas*')">
+                {{ __('Informe Proyectos') }}
+            </x-responsive-nav-link>
+            @endrole
+
+            @role('Administrador')
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                {{ __('Usuarios') }}
+            </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->
